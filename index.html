@@ -6,19 +6,557 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<style>
+/* ---------- Design Tokens ---------- */
+:root {
+  /* Light mode */
+  --bg:#F2F5F8;
+  --surface:#FFFFFF;
+  --ink:#14202B;
+  --muted:#586674;
+  --line:#D6DDE4;
+  --hover:#F6F9FB;
+  --chip:#EDF1F5;
+  --accent:#0A6C9E;
+  --accent-ink:#FFFFFF;
+  --code-bg:#FBFCFD;
+  --code-ink:#1B2733;
+  --ok:#17794A;
+  --warn:#8A5A00;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:#0E1318;
+    --surface:#151C23;
+    --ink:#E5EBF0;
+    --muted:#93A1AE;
+    --line:#26323C;
+    --hover:#1A232B;
+    --chip:#1D2830;
+    --accent:#58B6E8;
+    --accent-ink:#07202E;
+    --code-bg:#0B1015;
+    --code-ink:#D5DEE6;
+    --ok:#5CC58A;
+    --warn:#E5B567;
+  }
+}
+
+/* ---------- Global ---------- */
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans", system-ui, "Segoe UI", sans-serif;}
+.container{max-width:860px;margin:auto;padding:0 1rem;}
+.topline{font-size:0.85rem;color:var(--muted);text-transform:uppercase;margin-top:1rem;}
+h1{margin:0.4rem 0;font-weight:600;}
+.intro{margin:.4rem 0;font-size:0.95rem;color:var(--muted);}
+.details{border:1px solid var(--line);border-radius:10px;background:var(--surface);margin-top:0.6rem;}
+summary{
+  list-style:none;display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;cursor:pointer;outline:none;}
+summary::-webkit-details-marker{display:none;}
+summary:focus-visible{outline:3px solid var(--accent);}
+summary .left{display:flex;flex-direction:column;align-items:flex-start;gap:0.2rem;}
+summary .num{font-family:"IBM Plex Mono", Consolas, "Courier New", monospace;}
+summary .title{font-weight:500;}
+.summary-chips{display:flex;flex-wrap:wrap;gap:0.3rem;margin-top:0.2rem;}
+.summary-chips .chip{background:var(--chip);color:var(--ink);font-size:0.75rem;padding:0 .4rem;border-radius:4px;}
+.chevron{transition:transform .2s;}
+details[open] .chevron{transform:rotate(90deg);}
+/* ---------- Code Box ---------- */
+.code-box{background:var(--code-bg);border:1px solid var(--line);border-radius:4px;margin:0.4rem 0;overflow:hidden;}
+.code-header{display:flex;justify-content:space-between;align-items:center;background:var(--surface);border-bottom:1px solid var(--line);padding:.4rem .8rem;}
+.code-header .filename{font-family:"IBM Plex Mono", Consolas, "Courier New", monospace;}
+.code-header button{background:var(--accent);color:var(--accent-ink);border:none;border-radius:4px;padding:.3rem .6rem;cursor:pointer;display:flex;align-items:center;gap:0.3rem;}
+.code-header button svg{width:14px;height:14px;}
+pre.code{margin:0;padding:.6rem;white-space:pre;overflow:auto;font-family:"IBM Plex Mono", Consolas, "Courier New", monospace;font-size:13.5px;line-height:1.65;color:var(--code-ink);background:var(--code-bg);max-height:30rem;}
+.code-footer{display:flex;justify-content:space-between;padding:.3rem .6rem;font-size:0.75rem;background:var(--surface);border-top:1px solid var(--line);}
+.feedback{margin-left:0.6rem;color:var(--ok);} 
+.feedback[hidden]{display:none;}
+.to-run{margin-top:0.4rem;font-size:0.85rem;color:var(--muted);} 
+.changed{border:1px solid var(--warn);padding:0.2rem 0.4rem;margin-right:0.4rem;font-size:0.75rem;display:inline-block;}
+.footer-note{margin-top:1rem;font-size:0.8rem;color:var(--muted);border-top:1px solid var(--line);padding-top:.6rem;}
+@media (max-width:390px){
+  .summary-chips{flex-direction:column;align-items:flex-start;}
+}
+</style>
 </head>
 <body>
-  <div class="container">
-    <p class="topline">II BCA DS ‘A’ · 24PBDS32 · Programs 1 to 6</p>
-    <h1>MWAD Practicals</h1>
-    <p class="intro">Modern Web Application Development. Click a program to open it, press <strong>Copy code</strong>, and paste it into Notepad.</p>
-    <div id="programs" class="program-list"></div>
-    <footer class="footer-note">
-      Each statement is on its own line so the code is easy to read. The logic matches your record apart from the changes marked on a program.
-    </footer>
-  </div>
-<script src="programs.js"></script>
-<script src="app.js"></script>
+<div class="container">
+  <p class="topline">II BCA DS ‘A’ · 24PBDS32 · Programs 1 to 6</p>
+  <h1>MWAD Practicals</h1>
+  <p class="intro">Modern Web Application Development. Click a program to open it, press Copy code, and paste it into Notepad.</p>
+
+  <!-- Program 1 -->
+  <details class="details" open>
+    <summary aria-controls="p1" id="summary1">
+      <div class="left">
+        <span class="num">01</span>
+        <span class="title">Design The Basic HTML Page Creation</span>
+        <div class="summary-chips"><span class="chip">program1.html</span></div>
+      </div>
+      <span class="chevron">&#9654;</span>
+    </summary>
+    <div class="content" id="p1">
+      <p><strong>Aim:</strong> To create a simple web page using basic HTML tags.</p>
+      <div class="changed">CHANGED</div> The link address is now w3schools.com (your record has w3school.com). The image loads from the internet, so connect to the internet to see it.
+      <div class="code-box">
+        <div class="code-header">
+          <span class="filename">program1.html</span>
+          <button class="copy-btn" data-filename="program1.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy code</button>
+        </div>
+        <pre class="code" tabindex="0"><code>&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Web Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body align = center&gt;
+&lt;h1&gt;&lt;u&gt;Welcome to My Web Page&lt;/u&gt;&lt;/h1&gt;
+&lt;h2&gt;About This Page&lt;/h2&gt;
+&lt;p&gt;This is a simple HTML page created to demonstrate the basic structure of a webpage.
+It includes headings, paragraphs, a link, and an image.&lt;/p&gt;
+&lt;h3&gt;Why Learn HTML?&lt;/h3&gt;
+&lt;p&gt;&lt;mark&gt;HTML (HyperText Markup Language)&lt;/mark&gt; is the foundation of all websites. Learning it allows you to create and structure content for the web. It's easy to learn and extremely powerful when combined with CSS and JavaScript.&lt;/p&gt;
+&lt;h3&gt; HTML Logo &lt;/h3&gt;
+&lt;img src="https://www.devopsschool.com/blog/wp-content/uploads/2023/07/image-249.png" alt="Sample placeholder image" width="400" height="200"&gt;
+&lt;p&gt;Want to learn more? Visit
+&lt;a href="https://www.w3schools.com/html/default.asp" alt = "This is the image description"&gt; Click here &lt;/a&gt;.
+&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+        <div class="code-footer">
+          <span class="line-count">38 lines</span>
+          <span>UTF-8</span>
+          <span class="feedback" role="status" aria-live="polite" hidden></span>
+        </div>
+      </div>
+      <p class="to-run">To run: paste the code into Notepad, choose File, then Save As, set "Save as type" to All files, and name it <strong>program1.html</strong>. Then double‑click the saved file to run it in your browser.</p>
+    </div>
+  </details>
+
+  <!-- Program 2 -->
+  <details class="details">
+    <summary aria-controls="p2" id="summary2">
+      <div class="left">
+        <span class="num">02</span>
+        <span class="title">Styling A Web Page With CSS</span>
+        <div class="summary-chips"><span class="chip">index.html</span><span class="chip">styles.css</span></div>
+      </div>
+      <span class="chevron">&#9654;</span>
+    </summary>
+    <div class="content" id="p2">
+      <p><strong>Aim:</strong> To create a simple shopping-style web page using HTML and apply CSS for layout and styling.</p>
+      <div class="changed">CHANGED</div> The file is named index.html (your record has Index.html) and the missing </nav> closing tag is added.
+
+      <!-- index.html code -->
+      <div class="code-box">
+        <div class="code-header">
+          <span class="filename">index.html</span>
+          <button class="copy-btn" data-filename="index.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy code</button>
+        </div>
+        <pre class="code" tabindex="0"><code>&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Sample&lt;/title&gt;
+&lt;link rel="stylesheet" href="styles.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;
+&lt;h1&gt; Shopping Styles&lt;/h1&gt;
+&lt;nav&gt;
+&lt;a href = "#"&gt;Home&lt;/a&gt;
+&lt;a href = "#"&gt;Products&lt;/a&gt;
+&lt;a href="#"&gt; Categories &lt;/a&gt;
+&lt;a href="#"&gt;Contact&lt;/a&gt;
+&lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+&lt;section class="product"&gt;
+&lt;h2&gt;Sneakers&lt;/h2&gt;
+&lt;p&gt;Stylish and comfy footwear&lt;/p&gt;
+&lt;p&gt;$49.99&lt;/p&gt;
+&lt;/section&gt;
+&lt;section class="product"&gt;
+&lt;h2&gt;Leather Wallet&lt;/h2&gt;
+&lt;p&gt;Elegant and durable wallet.&lt;/p&gt;
+&lt;p&gt;$29.99&lt;/p&gt;
+&lt;/section&gt;
+&lt;section class="product"&gt;
+&lt;h2&gt;Smart Watch&lt;/h2&gt;
+&lt;p&gt;Track fitness&lt;/p&gt;
+&lt;p&gt;$99.99&lt;/p&gt;
+&lt;/section&gt;
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+        <div class="code-footer">
+          <span class="line-count">46 lines</span>
+          <span>UTF-8</span>
+          <span class="feedback" role="status" aria-live="polite" hidden></span>
+        </div>
+      </div>
+
+      <!-- styles.css code -->
+      <div class="code-box">
+        <div class="code-header">
+          <span class="filename">styles.css</span>
+          <button class="copy-btn" data-filename="styles.css"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy code</button>
+        </div>
+        <pre class="code" tabindex="0"><code>body {
+font-family: Arial, sans-serif;
+margin: 0;
+background-color:grey;
+}
+header {
+background-color: black;
+color: white;
+padding: 20px;
+text-align: center;
+}
+nav a{
+color: white;
+margin: 0 10px;
+}
+main {
+display: flex;
+justify-content: space-around;
+flex-wrap: wrap;
+padding: 20px;
+}
+.product {
+background-color: white;
+border-radius: 8px;
+padding: 15px;
+margin: 10px;
+width: 250px;
+text-align: center;
+}
+</code></pre>
+        <div class="code-footer">
+          <span class="line-count">28 lines</span>
+          <span>UTF-8</span>
+          <span class="feedback" role="status" aria-live="polite" hidden></span>
+        </div>
+      </div>
+      <p class="to-run">To run: copy one file, paste it into Notepad, choose File, then Save As, and set "Save as type" to All files. Save <strong>index.html</strong> and <strong>styles.css</strong> in the same folder. Then double‑click <strong>index.html</strong> to run it.</p>
+    </div>
+  </details>
+
+  <!-- Program 3 -->
+  <details class="details">
+    <summary aria-controls="p3" id="summary3">
+      <div class="left">
+        <span class="num">03</span>
+        <span class="title">DOM Manipulation in JavaScript</span>
+        <div class="summary-chips"><span class="chip">program3.html</span></div>
+      </div>
+      <span class="chevron">&#9654;</span>
+    </summary>
+    <div class="content" id="p3">
+      <p><strong>Aim:</strong> To demonstrate how to manipulate HTML elements dynamically using JavaScript and the Document Object Model (DOM).</p>
+      <div class="code-box">
+        <div class="code-header">
+          <span class="filename">program3.html</span>
+          <button class="copy-btn" data-filename="program3.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy code</button>
+        </div>
+        <pre class="code" tabindex="0"><code>&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt; DOM Manipulation &lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h2 id="heading"&gt; Welcome to my page &lt;/h2&gt;
+&lt;p id="info"&gt; Click the button to change this content and color.&lt;/p&gt;
+&lt;button onclick="manipulateDOM()"&gt; Click here &lt;/button&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;script&gt;
+function manipulateDOM() {
+var heading = document.getElementById("heading");
+heading.innerHTML = "&lt;u&gt; Content Changed! &lt;/u&gt;";
+heading.style.color = "green";
+heading.style.fontSize = "30px";
+var info = document.getElementById("info");
+info.innerHTML = "&lt;b&gt; This is updated using JavaScript! &lt;/b&gt;";
+info.style.backgroundColor = "lightyellow";
+}
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+        <div class="code-footer">
+          <span class="line-count">32 lines</span>
+          <span>UTF-8</span>
+          <span class="feedback" role="status" aria-live="polite" hidden></span>
+        </div>
+      </div>
+      <p class="to-run">To run: paste the code into Notepad, choose File, then Save As, set "Save as type" to All files, and name it <strong>program3.html</strong>. Then double‑click the saved file to run it in your browser.</p>
+    </div>
+  </details>
+
+  <!-- Program 4 -->
+  <details class="details">
+    <summary aria-controls="p4" id="summary4">
+      <div class="left">
+        <span class="num">04</span>
+        <span class="title">Handling Forms and Input Validation</span>
+        <div class="summary-chips"><span class="chip">program4.html</span></div>
+      </div>
+      <span class="chevron">&#9654;</span>
+    </summary>
+    <div class="content" id="p4">
+      <p><strong>Aim:</strong> To create a user registration form and validate input fields using JavaScript.</p>
+      <div class="code-box">
+        <div class="code-header">
+          <span class="filename">program4.html</span>
+          <button class="copy-btn" data-filename="program4.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy code</button>
+        </div>
+        <pre class="code" tabindex="0"><code>&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Form Validation&lt;/title&gt;
+&lt;script&gt;
+function validateForm() {
+const form = document.forms["myForm"];
+const name = form["username"].value.trim();
+const age = form["age"].value;
+const email = form["email"].value.trim();
+const password = form["password"].value;
+const gender = form["gender"].value;
+if (name === "") {
+alert("Name is required");
+return false;
+}
+if (isNaN(age) || age < 1 || age > 120) {
+alert("Enter a valid age between 1 and 120");
+return false;
+}
+if (!email.includes("@")) {
+alert("Enter a valid email address");
+return false;
+}
+if (password.length < 6) {
+alert("Password must be at least 6 characters");
+return false;
+}
+if (gender === "") {
+alert("Please select a gender");
+return false;
+}
+alert("Form submitted successfully!");
+return true;
+}
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h2&gt;User Registration Form&lt;/h2&gt;
+&lt;form name="myForm" onsubmit="return validateForm()"&gt;
+Name: &lt;input type="text" name="username"&gt;&lt;br&gt;&lt;br&gt;
+Age: &lt;input type="text" name="age"&gt;&lt;br&gt;&lt;br&gt;
+Email: &lt;input type="text" name="email"&gt;&lt;br&gt;&lt;br&gt;
+Password: &lt;input type="password" name="password"&gt;&lt;br&gt;&lt;br&gt;
+Gender:
+&lt;select name="gender"&gt;
+<option value="">Select</option>
+<option value="Male">Male</option>
+<option value="Female">Female</option>
+<option value="Other">Other</option>
+&lt;/select&gt;&lt;br&gt;&lt;br&gt;
+&lt;input type="submit" value="Submit"&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+        <div class="code-footer">
+          <span class="line-count">57 lines</span>
+          <span>UTF-8</span>
+          <span class="feedback" role="status" aria-live="polite" hidden></span>
+        </div>
+      </div>
+      <p class="to-run">To run: paste the code into Notepad, choose File, then Save As, set "Save as type" to All files, and name it <strong>program4.html</strong>. Then double‑click the saved file to run it in your browser.</p>
+    </div>
+  </details>
+
+  <!-- Program 5 -->
+  <details class="details">
+    <summary aria-controls="p5" id="summary5">
+      <div class="left">
+        <span class="num">05</span>
+        <span class="title">Creating A Responsive Web Page Using CSS</span>
+        <div class="summary-chips"><span class="chip">program5.html</span></div>
+      </div>
+      <span class="chevron">&#9654;</span>
+    </summary>
+    <div class="content" id="p5">
+      <p><strong>Aim:</strong> To design a responsive web page that automatically adjusts text size and color based on the screen width using CSS media queries.</p>
+      <div class="code-box">
+        <div class="code-header">
+          <span class="filename">program5.html</span>
+          <button class="copy-btn" data-filename="program5.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy code</button>
+        </div>
+        <pre class="code" tabindex="0"><code>&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt; Responsive &lt;/title&gt;
+&lt;style&gt;
+body {
+font-family: Arial, sans-serif;
+margin : 20px;
+line-height : 1.6;
+}
+h1 {
+font-size : 50px;
+color : red;
+}
+p {
+font-size : 20px;
+}
+@media (max-width:900px) and (orientation : portrait) {
+h1 {
+font-size : 30px;
+color : blue;
+}
+p {
+font-size : 18px;
+}
+}
+@media(max-width : 500px) {
+h1{
+font-size : 15px;
+color : green;
+}
+p {
+font-size : 16px;
+}
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt; RESPONSIVE WEBPAGE &lt;/h1&gt;
+&lt;p&gt; This is a simple responsive text example. Resize the browser window and the text size and color changes automatically. &lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+        <div class="code-footer">
+          <span class="line-count">56 lines</span>
+          <span>UTF-8</span>
+          <span class="feedback" role="status" aria-live="polite" hidden></span>
+        </div>
+      </div>
+      <p class="to-run">To run: paste the code into Notepad, choose File, then Save As, set "Save as type" to All files, and name it <strong>program5.html</strong>. Then double‑click the saved file to run it in your browser.</p>
+    </div>
+  </details>
+
+  <!-- Program 6 -->
+  <details class="details">
+    <summary aria-controls="p6" id="summary6">
+      <div class="left">
+        <span class="num">06</span>
+        <span class="title">Event Handling Using JavaScript</span>
+        <div class="summary-chips"><span class="chip">program6.html</span></div>
+      </div>
+      <span class="chevron">&#9654;</span>
+    </summary>
+    <div class="content" id="p6">
+      <p><strong>Aim:</strong> To implement JavaScript event handling for interactive web pages.</p>
+      <div class="changed">CHANGED</div> ondbclick in your record is a typo. It is now ondblclick, so the double-click message works.
+      <div class="code-box">
+        <div class="code-header">
+          <span class="filename">program6.html</span>
+          <button class="copy-btn" data-filename="program6.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy code</button>
+        </div>
+        <pre class="code" tabindex="0"><code>&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt; Event Handling &lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h2&gt; JavaScript Event Handling with multiple events &lt;/h2&gt;
+&lt;button id="btn"&gt; Click me &lt;/button&gt;
+&lt;p id = "output"&gt; &lt;/p&gt;
+&lt;input type = "text" id = "textbox" placeholder = "Type Something..."/&gt;
+&lt;script&gt;
+const btn = document.getElementById("btn");
+const output = document.getElementById("output");
+const textbox = document.getElementById("textbox");
+btn.onclick = function() {
+output.textContent="Button Clicked";
+};
+btn.ondblclick = function() {
+output.textContent = "Button double-clicked!";
+};
+btn.onmouseover = function() {
+output.textContent = "Mouse is over the button!";
+};
+btn.onmouseout = function() {
+output.textContent = "Mouse moved away!";
+};
+textbox.onkeydown = function(event) {
+output.textContent = "Key pressed :"+ event.key;
+};
+textbox.onkeyup = function(event) {
+output.textContent = "You released :"+event.key;
+};
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+        <div class="code-footer">
+          <span class="line-count">44 lines</span>
+          <span>UTF-8</span>
+          <span class="feedback" role="status" aria-live="polite" hidden></span>
+        </div>
+      </div>
+      <p class="to-run">To run: paste the code into Notepad, choose File, then Save As, set "Save as type" to All files, and name it <strong>program6.html</strong>. Then double‑click the saved file to run it in your browser.</p>
+    </div>
+  </details>
+
+  <footer class="footer-note">
+    Each statement is on its own line so the code is easy to read. The logic matches your record apart from the changes marked on a program.
+  </footer>
+</div>
+<script>
+// Accordion fallback – ensure only one <details> open at a time
+document.querySelectorAll('details').forEach(d => {
+  d.addEventListener('toggle', (e) => {
+    if (d.open) {
+      document.querySelectorAll('details').forEach(other => {
+        if (other !== d && other.open) other.open = false;
+      });
+    }
+  });
+});
+
+// Copy button logic
+function copyText(button) {
+  const filename = button.dataset.filename;
+  const codeEl = button.closest('.code-box').querySelector('pre.code code');
+  const text = codeEl.textContent;
+  const feedback = button.closest('.code-box').querySelector('.feedback');
+  navigator.clipboard.writeText(text).then(() => {
+    feedback.textContent = `Copied ${filename}. Now paste it into Notepad.`;
+    feedback.hidden = false;
+    setTimeout(()=>{feedback.hidden=true;},3000);
+  }).catch(() => {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      feedback.textContent = `Copied ${filename}. Now paste it into Notepad.`;
+      feedback.hidden = false;
+      setTimeout(()=>{feedback.hidden=true;},3000);
+    } catch (e) {
+      // final fallback – select code element
+      const range = document.createRange();
+      range.selectNodeContents(codeEl);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      feedback.textContent = 'Code selected. Press Ctrl+C to copy.';
+      feedback.hidden = false;
+    }
+    document.body.removeChild(ta);
+  });
+}
+
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', () => copyText(btn));
+});
+</script>
 </body>
 </html>
